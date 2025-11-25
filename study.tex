@@ -1,0 +1,217 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{frenchmath}
+\usepackage{hyperref}
+
+
+\title{Robot}
+\author{Maxime Caron}
+\date{October 2025}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Ce document présente les calculs mécaniques du robot Game Team. Toutes les valeurs sont traitées selon les règles de chiffres significatifs et le Système International.
+
+\section{Bras}
+
+\subsection{Emetteur ventouse}
+
+La masse des élèments du L3 incluant la palette hors servo = 168g d'après Fusion 360.
+On ne considère que le poids comme force agissant sur le bras.
+$$P = m \cdot g = 0.168 \cdot 9.81 = \boxed{1.65\,\mathrm{N}}$$
+Calculons à présent le couple exercé par cette force sur le bras.
+Soit la distance entre le centre de gravité de l'émetteur et l'axe de rotation du bras :
+$$d = 5.0\,\mathrm{cm} = 0.050\,\mathrm{m}$$
+Le couple est donné par :
+$$C = P \cdot d = 1.65 \cdot 0.050 = \boxed{8.3 \times 10^{-2}\,\mathrm{N\cdot m}} = \boxed{8.5 \times 10^{-1}\,\mathrm{kgf\cdot cm}}$$
+Le servo choisi doit être capable de fournir au moins ce couple multiplié par 3 (facteur de sécurité pour couvrir dynamiques, frottements et chocs) :
+$$C_{\min} = 3 \times 8.3\times10^{-2} = \boxed{2.49\times10^{-1}\,\mathrm{N\cdot m}} \approx \boxed{2.55\,\mathrm{kgf\cdot cm}}$$
+
+\subsection{Lien 2}
+
+La masse des élèments de l'émetteur + J1 incluant la palette hors servo = 200g d'après Fusion 360.
+On ne considère que le poids comme force agissant sur le bras.
+$$P = m \cdot g = 0.200 \cdot 9.81 = \boxed{1.96\,\mathrm{N}}$$
+Calculons à présent le couple exercé par cette force sur le bras.
+Soit la distance entre le centre de gravité de l'émetteur et l'axe de rotation du bras :
+$$d = 150.0\,\mathrm{mm} = 0.150\,\mathrm{m}$$
+Le couple est donné par :
+$$C = P \cdot d = 1.96 \cdot 0.150 = \boxed{2.94 \times 10^{-1}\,\mathrm{N\cdot m}} = \boxed{3.0\,\mathrm{kgf\cdot cm}}$$
+Le servo choisi doit être capable de fournir au moins ce couple multiplié par 3 (facteur de sécurité pour couvrir dynamiques, frottements et chocs) :
+$$C_{\min} = 3 \times 2.94\times10^{-1} = \boxed{8.82\times10^{-1}\,\mathrm{N\cdot m}} \approx \boxed{8.99\,\mathrm{kgf\cdot cm}}$$
+
+\subsection{Lien 1}
+La masse des élèments de l'émetteur + J1 + J2 incluant la palette hors servo = 250g d'après Fusion 360.
+On ne considère que le poids comme force agissant sur le bras.
+$$P = m \cdot g = 0.250 \cdot 9.81 = \boxed{2.45\,\mathrm{N}}$$
+Calculons à présent le couple exercé par cette force sur le bras.
+Soit la distance entre le centre de gravité de l'émetteur et l'axe de rotation du bras :
+$$d = 180.0\,\mathrm{mm} = 0.180\,\mathrm{m}$$
+Le couple est donné par :
+$$C = P \cdot d = 2.45 \cdot 0.180 = \boxed{4.41 \times 10^{-1}\,\mathrm{N\cdot m}} = \boxed{4.5\,\mathrm{kgf\cdot cm}}$$
+Le servo choisi doit être capable de fournir au moins ce couple multiplié par 3 (facteur de sécurité pour couvrir dynamiques, frottements et chocs) :
+$$C_{\min} = 3 \times 4.41\times10^{-1} = \boxed{1.32\,\mathrm{N\cdot m}} \approx \boxed{13.5\,\mathrm{kgf\cdot cm}}$$
+
+\subsection{Aspiration}
+Les forces exercées sur la palette sont (en négligeant le frottement et la rotation) :
+$$\sum F = F_{poids} + F_{inertie}$$
+Le poids de la palette vaut :
+$$F_{poids} = m \cdot g = 0.150 \cdot 9.81 = \boxed{1.47\,\mathrm{N}}$$
+La pompe à vide fournit une dépression (pression relative) de :
+$$\Delta p_{pompe} = 420\,\mathrm{mmHg} \approx 0.550\,\mathrm{bar} = \boxed{55\,\mathrm{kPa}} = \boxed{5.50 \times 10^{4}\,\mathrm{Pa}}$$
+
+L'inertie (accélération faible) :
+$$F_{inertie} = m \cdot a = 0.150 \times 0.01 = 1.5 \times 10^{-3}\,\mathrm{N}$$
+
+Donc la force totale exercée sur la palette est :
+$$F = F_{poids} + F_{inertie} = 1.47 + 1.5 \times 10^{-3} \approx \boxed{1.47\,\mathrm{N}}$$
+
+Pour la ventouse :
+$$F = \Delta p \cdot S \;\;\Leftrightarrow\;\; S = \frac{F}{\Delta p}$$
+$$S = \frac{1.47}{5.50 \times 10^{4}} = 2.67 \times 10^{-5}\,\mathrm{m^2} = \boxed{26.7\,\mathrm{mm^2}}$$
+
+La ventouse a une surface circulaire, donc
+$$r = \sqrt{\frac{S}{\pi}} = \sqrt{\frac{26.7}{\pi}} = \boxed{2.92\,\mathrm{mm}}$$
+Avec facteur de sécurité de 4 on obtient :
+$$r_{final} = 4 \times 2.92 = \boxed{11.7\,\mathrm{mm}}$$
+Or il n'existe pas de ventouse de ce rayon, on prendra donc une ventouse de rayon 20mm (qui permet d'assurer l'étanchéité).
+Il la faut en silicone et de course 1cm environ, souple (40-60 Shore A).
+\section{Convoyeur}
+\subsection{Dimensions}
+La largeur de chaque palette verticalement entre les palettes est de $W = 30\,\mathrm{mm}$.
+Pour que chaque pic ait à la fois solidité et souplesse, on estime que l'épaisseur doit être de 3mm
+$$e = 3\,\mathrm{mm}$$
+Il faut également prendre en compte l'épaisseur du tapis roulant :
+$$t = 1.5\,\mathrm{mm}$$
+La circonférence du demi cercle de l'axe est :
+$$C_{poulie} = \pi \cdot r$$
+Il doit être possible pour le convoyeur d'avoir (en bout de course), un pic en haut et un pic en bas. Le diamètre de l'axe doit donc être :
+$$W + e = C_{axe} + t \Leftrightarrow r = \frac{W + e - t}{\pi} = 10.03\, \mathrm{mm} \approx 10\,\mathrm{mm}$$
+
+donc le diamètre de l'axe est :
+$$d_{axe} = 2r = \boxed{20\,\mathrm{mm}}$$
+
+\subsection{Poulie entrainée}
+Sachant que la poulie driven a un diamètre extérieur de 20mm, déterminons le nombre de pas pour celle ci en format T5 :
+$$N_{dents}  = \frac{\pi \cdot d}{p} = \frac{\pi \cdot 20}{5} = 12.57 \approx 13\,\text{dents}$$
+
+\subsection{Poulie motrice}
+Dimensionnement arbitraire du moteurpour l'instant :
+$$C = 0.1\,\mathrm{N\cdot m}$$
+
+\section{Propulsion}
+\subsection{Dimensionnement des moteurs}
+Le robot pèsera environ $m = 4\,\mathrm{kg}$. \\
+Il sera entrainé par 4 moteurs qui seront liées à des roues meccanum de diamètre $d_{roue} = 60\,\mathrm{mm}$. \\
+Il devra atteindre 2 m/s en vitesse de pointe avec une accélération de $a = 1.5\,\mathrm{m/s^2}$. \\
+Calculons le rendements :
+- En passant à 16V
+- Rendement standart d'un stepper : 50\%
+- Perte mécanique (roues meccanum) : 25\%
+$$\eta = 0.50 \times 0.75 = 0.38 = 38\%$$
+
+D'après \href{https://community.robotshop.com/blog/show/dimensionnement-dun-moteur-dentranement}{voir le site pour le détail du calcul}
+
+$$C = 0.23\,\mathrm{N\cdot m}$$
+
+En ajoutant un facteur de sécurité de 2 pour couvrir les pertes dynamiques, frottements et chocs, on obtient :
+$$C_{final} = 2 \times 0.23 = \boxed{0.46\,\mathrm{N\cdot m}}$$
+
+\newpage
+\section{Pince - ARCHIVE}
+\subsection{Ecart entre palettes}
+Soit chaque palette sur le plan latéral d’un cube de $5.0\,\mathrm{cm} \times 3.0\,\mathrm{cm}$ :
+
+$$l_{palette} = 5.0\,\mathrm{cm} \qquad h_{palette} = 3.0\,\mathrm{cm}$$
+
+En position repliée, l'écart entre les bras vaut :
+$$E_{plie} = l_{palette} = 5.0\,\mathrm{cm}$$
+Pour la rotation libre, l'écart (déployé) doit être égal à deux fois la projection de la palette sur l’axe horizontal :
+
+$$E_{theo} = 2T = 2 \cdot \frac{\sqrt{l_{palette}^2 + h_{palette}^2}}{2} = \sqrt{5.0^2 + 3.0^2} = 5.8\,\mathrm{cm}$$
+
+Un jeu $J = 0.3\,\mathrm{cm}$ (3 mm) est ajouté pour compenser les imprecisions :
+
+$$E_{final} = E_{theo} + J = 5.8 + 0.3 = \boxed{6.1\,\mathrm{cm}}$$
+
+\subsection{Positionnement des bielles sur la manivelle}
+
+On traite un côté (à reproduire symétriquement) :
+
+$$d_{O/A,plie} = \frac{E_{plie}}{2} = 2.5\,\mathrm{cm}$$
+$$d_{O/A,deploye} = \frac{E_{final}}{2} = 3.05\,\mathrm{cm}$$
+$$d_{O/B,plie} = d_{O/A,plie} + E_{plie} = 2.5 + 5.0 = 7.5\,\mathrm{cm}$$
+$$d_{O/B,deploye} = d_{O/A,deploye} + E_{final} = 3.05 + 6.1 = 9.15\,\mathrm{cm}$$
+
+Déplacement de la tête de bielle :
+$$\Delta_{O/A} = d_{O/A,deploye} - d_{O/A,plie} = 3.05 - 2.5 = 0.55\,\mathrm{cm}$$
+$$\Delta_{O/B} = d_{O/B,deploye} - d_{O/B,plie} = 9.15 - 7.5 = 1.65\,\mathrm{cm}$$
+
+La course de la manivelle vaut $d = 2r$, donc $r = d/2$ :
+$$r_{proche} = \frac{\Delta_{O/A}}{2} = 0.275\,\mathrm{cm} = \boxed{0.28\,\mathrm{cm}}$$
+$$r_{eloigne} = \frac{\Delta_{O/B}}{2} = 0.825\,\mathrm{cm} = \boxed{0.83\,\mathrm{cm}}$$
+
+\includegraphics[scale=0.5]{res/mechanism}
+
+\subsection{Calcul du couple inertiel}
+
+Le bras est guidé linéairement : on néglige gravité et frottement. Seule l’inertie est modélisée :
+
+$$F_i = m \cdot a = m \cdot \omega^2 \cdot r$$
+$$C = F_i \cdot r = m \cdot \omega^2 \cdot r^2$$
+
+Données :
+\begin{itemize}
+    \item Masse piston + palette : $m = 0.190\,\mathrm{kg}$
+    \item Vitesse manivelle : $\omega = \pi\,\mathrm{rad\,s}^{-1}$
+    \item Rayons : $r_{proche} = 0.0028\,\mathrm{m}$ ; $r_{eloigne} = 0.0083\,\mathrm{m}$
+\end{itemize}
+
+Calculs :
+$$C_{proche} = 0.190 \times \pi^2 \times (0.0028)^2 \approx 1.47 \times 10^{-5}\,\mathrm{N\cdot m}$$
+$$C_{eloigne} = 0.190 \times \pi^2 \times (0.0083)^2 \approx 1.29 \times 10^{-4}\,\mathrm{N\cdot m}$$
+
+Pour 2 bielles " proches " et 2 " éloignées " : 
+$$C_{total} = 2\,C_{proche} + 2\,C_{eloigne} \approx 2.87 \times 10^{-4}\,\mathrm{N\cdot m}$$
+
+Ajouter un facteur de sécurité (x3 à x4) pour le choix du servo.
+
+\subsection{Matériaux (impression 3D)}
+
+La densité effective :
+$$\rho_{impression} = \rho_{materiau} \cdot \frac{Infill}{100} \cdot k$$
+où $k$ dépend du motif d’infill :
+
+\vspace{0.5em}
+\begin{tabular}{|c|c|}
+    \hline
+    Infill & Coefficient $k$ \\
+    \hline
+    100\%   & 0.92 à 0.98 (typiquement 0.95) \\
+    80\%    & 0.90 à 0.95 \\
+    60\%    & 0.85 à 0.92 \\
+    40\%    & 0.80 à 0.88 \\
+    20\%    & 0.75 à 0.85 \\
+    \hline
+\end{tabular}
+
+\vspace{1em}
+\begin{tabular}{|l|c|}
+    \hline
+    Matériau & $\rho \, (\mathrm{g\,mm}^{-3})$ \\
+    \hline
+    Polycarbonate (PC) & $1.21\times10^{-3}$ \\
+    PLA                & $1.24\times10^{-3}$ \\
+    \hline
+\end{tabular}
+
+Exemples (infill 60\%, $k=0.85$) :
+$$\rho_{bras} = 1.21\times10^{-3} \times 0.6 \times 0.85 = \boxed{6.17\times10^{-4}\,\text{g\,mm}^{-3}}$$
+$$\rho_{bielle} = 1.24\times10^{-3} \times 0.6 \times 0.85 = \boxed{6.32\times10^{-4}\,\text{g\,mm}^{-3}}$$
+
+\end{document}
