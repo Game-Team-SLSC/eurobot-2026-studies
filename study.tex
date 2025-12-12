@@ -81,24 +81,47 @@ Avec facteur de sécurité de 4 on obtient :
 $$r_{final} = 4 \times 2.92 = \boxed{11.7\,\mathrm{mm}}$$
 Or il n'existe pas de ventouse de ce rayon, on prendra donc une ventouse de rayon 20mm (qui permet d'assurer l'étanchéité).
 Il la faut en silicone et de course 1cm environ, souple (40-60 Shore A).
+\newpage
 \section{Convoyeur}
 \subsection{Dimensions}
-La largeur de chaque palette verticalement entre les palettes est de $W = 30\,\mathrm{mm}$.
-Pour que chaque pic ait à la fois solidité et souplesse, on estime que l'épaisseur doit être de 3mm
-$$e = 3\,\mathrm{mm}$$
-Il faut également prendre en compte l'épaisseur du tapis roulant :
-$$t = 1.5\,\mathrm{mm}$$
-La circonférence du demi cercle de l'axe est :
-$$C_{poulie} = \pi \cdot r$$
-Il doit être possible pour le convoyeur d'avoir (en bout de course), un pic en haut et un pic en bas. Le diamètre de l'axe doit donc être :
-$$W + e = C_{axe} + t \Leftrightarrow r = \frac{W + e - t}{\pi} = 10.03\, \mathrm{mm} \approx 10\,\mathrm{mm}$$
+On a :
+\begin{itemize}
+    \item Epaisseur d'une palette $e_{palette} = 30\,\mathrm{mm}$;
+    \item Epaisseur du tapis roulant $e_{tapis} = 1.5\,\mathrm{mm}$;
+    \item Hauteur de dent de poulie $h_{dent} = 1.2\,\mathrm{mm}$;
+    \item Jeu entre chaque palette $j = 0.5\,\mathrm{mm}$;
+\end{itemize}
+Calculons la circonference du diamètre exterieur de la poulie au niveau de l'axe. \\
+On a $C_{cercletapis} = 2 \cdot (e_{palette} + j) $ \\
+Et $C_{cercletapis} = 2 \cdot \pi \cdot r_{cercletapis} $ donc
+\begin{align*}
+    2 \cdot (e_{palette} + j) &= 2 \cdot \pi \cdot r_{cercletapis} \\
+    \Leftrightarrow r_{cercletapis} &= \frac{e_{palette} + j}{\pi}
+\end{align*}
+\begin{align*}
+    r_{out} & = r_{cercletapis} - e_{tapis} \\
+    & = \frac{30 + 0.5}{\pi} - 1.5 \\
+    & = \boxed{8.2\,\mathrm{mm}}
+\end{align*}
+\begin{align*}
+    r_{in} & = r_{out} - h_{dent} \\
+    & = 8.2 - 1.2 \\
+    & = \boxed{7.0\,\mathrm{mm}}
+\end{align*}
 
-donc le diamètre de l'axe est :
-$$d_{axe} = 2r = \boxed{20\,\mathrm{mm}}$$
+On ajoutera dans la poulie des hinges d'épaisseur $h_{hinge} = 0.3\,\mathrm{mm}$ pour augmenter la durée de vie du tapis et sa capacacité à se plier
+Le pitch diameter se trouver alors au niveau du haut de ces hinges :
+\begin{align*}
+    r_{pitch} & = r_{out} + h_{hinge} \\
+    & = 8.2 + 0.3 \\
+    & = \boxed{8.5\,\mathrm{mm}}
+\end{align*}
 
 \subsection{Poulie entrainée}
-Sachant que la poulie driven a un diamètre extérieur de 20mm, déterminons le nombre de pas pour celle ci en format T5 :
-$$N_{dents}  = \frac{\pi \cdot d}{p} = \frac{\pi \cdot 20}{5} = 12.57 \approx 13\,\text{dents}$$
+Déterminons à présent le nombre de dents de la poulie entrainée. \\
+On sait $D_{pitch} = \frac{P \cdot Z}{\pi}$ où $P$ est le pas (distance entre deux dents) et $Z$ le nombre de dents donc $Z = \frac{\pi \cdot D_{pitch}}{P}$. \\
+
+$$Z = \frac{\pi \cdot 2 \cdot 8.5}{5} = 10.7 \approx \boxed{11} \, \mathrm{dents}$$
 
 \subsection{Poulie motrice}
 Dimensionnement arbitraire du moteurpour l'instant :
